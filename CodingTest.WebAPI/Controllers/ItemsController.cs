@@ -1,12 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Web.Http;
+using System.Web.Mvc;
 using CodingTest.DAL.DataContexts;
 using CodingTest.DAL.Entities;
 using CodingTest.DAL.Repositories;
 
 namespace CodingTest.WebAPI.Controllers
 {
-    [Authorize]
+    [System.Web.Http.Authorize]
+    [RequireHttps]
     public class ItemsController : ApiController
     {
         private readonly ItemDbCtx db;
