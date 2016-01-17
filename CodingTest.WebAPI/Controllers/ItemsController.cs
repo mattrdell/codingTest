@@ -10,7 +10,6 @@ using Kendo.Mvc.UI;
 namespace CodingTest.WebAPI.Controllers
 {
     [System.Web.Http.Authorize]
-    [RequireHttps]
     public class ItemsController : ApiController
     {
         private readonly ItemDbCtx db;
@@ -24,7 +23,9 @@ namespace CodingTest.WebAPI.Controllers
         {
             db = dbCtx;
         }
-        public DataSourceResult GetItemsAsDataSourceResult([ModelBinder(typeof(DataSourceRequestModelBinder))] DataSourceRequest request)
+
+        public DataSourceResult GetItemsAsDataSourceResult(
+            [ModelBinder(typeof (DataSourceRequestModelBinder))] DataSourceRequest request)
         {
             var itemRepo = new ItemRepository(db);
             return itemRepo.GetItems().ToDataSourceResult(request, item => new

@@ -1,59 +1,84 @@
-﻿var ViewModel = function () {
+﻿function ViewModel() {
     var self = this;
-    self.items = ko.observableArray();
-    self.error = ko.observable();
-    self.detail = ko.observable();
-    self.authors = ko.observableArray();
-    self.newItem = {
-        ItemId: ko.observable(),
-        Description: ko.observable(),
-        Price: ko.observable(),
-        Name: ko.observable()
+
+    var tokenKey = 'accessToken';
+
+    self.result = ko.observable();
+    self.user = ko.observable();
+
+    self.registerEmail = ko.observable();
+    self.registerPassword = ko.observable();
+    self.registerPassword2 = ko.observable();
+
+    self.loginEmail = ko.observable();
+    self.loginPassword = ko.observable();
+
+    function showError(jqXHR) {
+        self.result(jqXHR.status + ': ' + jqXHR.statusText);
     }
 
-    var itemsUri = '/api/items/';
+    self.callApi = function () {
+        self.result('');
 
-    function ajaxHelper(uri, method, data) {
-        self.error(''); // Clear error message
-        return $.ajax({
-            type: method,
-            url: uri,
-            dataType: 'json',
-            contentType: 'application/json',
-            data: data ? JSON.stringify(data) : null
-        }).fail(function (jqXHR, textStatus, errorThrown) {
-            self.error(errorThrown);
-        });
+        var token = sessionStorage.getItem(tokenKey);
+        var headers = {};
+        if (token) {
+            headers.Authorization = 'Bearer ' + token;
+        }
+
+        $.ajax({
+            type: 'GET',
+            url: '/api/values',
+            headers: headers
+        }).done(function (data) {
+            self.result(data);
+        }).fail(showError);
     }
 
-    function getAllItems() {
-        ajaxHelper(itemsUri, 'GET').done(function (data) {
-            self.items(data);
-        });
+    self.register = function () {
+        self.result('');
+
+        var data = {
+            Email: self.registerEmail(),
+            Password: self.registerPassword(),
+            ConfirmPassword: self.registerPassword2()
+        };
+
+        $.ajax({
+            type: 'POST',
+            url: '/api/Account/Register',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(data)
+        }).done(function (data) {
+            self.result("Done!");
+        }).fail(showError);
     }
 
-    //self.getBookDetail = function (item) {
-    //    ajaxHelper(itemsUri + item.Id, 'GET').done(function (data) {
-    //        self.detail(data);
-    //    });
-    //}
+    self.login = function () {
+        self.result('');
 
-    //self.addBook = function (formElement) {
-    //    var book = {
-    //        AuthorId: self.newBook.Author().Id,
-    //        Genre: self.newBook.Genre(),
-    //        Price: self.newBook.Price(),
-    //        Title: self.newBook.Title(),
-    //        Year: self.newBook.Year()
-    //    };
+        var loginData = {
+            grant_type: 'password',
+            username: self.loginEmail(),
+            password: self.loginPassword()
+        };
 
-    //    ajaxHelper(booksUri, 'POST', book).done(function (item) {
-    //        self.books.push(item);
-    //    });
-    //}
+        $.ajax({
+            type: 'POST',
+            url: '/Token',
+            data: loginData
+        }).done(function (data) {
+            self.user(data.userName);
+            // Cache the access token in session storage.
+            sessionStorage.setItem(tokenKey, data.access_token);
+        }).fail(showError);
+    }
 
-    // Fetch the initial data.
-    getAllItems();
-};
+    self.logout = function () {
+        self.user('');
+        sessionStorage.removeItem(tokenKey)
+    }
+}
 
-ko.applyBindings(new ViewModel());
+var app = new ViewModel();
+ko.applyBindings(app);
