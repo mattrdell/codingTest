@@ -20,9 +20,16 @@ namespace CodingTest.DAL.Repositories
             return db.Items;
         }
 
-        public bool PurchaseItem(Item item)
+        public bool PurchaseItem(int itemId)
         {
-            db.Entry(item).State = EntityState.Deleted;
+            var item = db.Items.FirstOrDefault(x => x.ItemId == itemId);
+
+            if (item == null || item.QtyInStock <= 0)
+            {
+                return false;
+            }
+
+            db.Entry(item).State = EntityState.Modified;
 
             try
             {

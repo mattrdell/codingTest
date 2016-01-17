@@ -28,11 +28,11 @@ namespace CodingTest.WebAPI.Controllers
         }
 
         [System.Web.Http.Authorize]
-        public bool PurchaseItem(Item item)
+        public bool PurchaseItem(int itemId)
         {
             var itemRepo = new ItemRepository(db);
 
-            return itemRepo.PurchaseItem(item);
+            return itemRepo.PurchaseItem(itemId);
         }
 
         protected override void Dispose(bool disposing)
