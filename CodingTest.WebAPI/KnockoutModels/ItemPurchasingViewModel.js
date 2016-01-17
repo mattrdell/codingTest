@@ -9,12 +9,20 @@ function Item(itemId, name, description, price, qtyInStock) {
     self.QtyInStock = ko.observable(qtyInStock);
 
     self.Purchase = function () {
+        var tokenKey = 'accessToken';
+        var token = sessionStorage.getItem(tokenKey);
+        var headers = {};
+        if (token) {
+            headers.Authorization = 'Bearer ' + token;
+        }
+
         var dataObject = ko.toJSON(this);
 
         $.ajax({
             url: '/api/items',
             type: 'post',
             data: dataObject,
+            headers: headers,
             contentType: 'application/json',
             success: itemPurchasingViewModel.itemListViewModel.getItems()
     });

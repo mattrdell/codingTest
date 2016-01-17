@@ -37,6 +37,7 @@ namespace CodingTest.WebAPI.Controllers
             return itemRepo.PurchaseItem(itemId);
         }
 
+        [Authorize]
         public HttpResponseMessage Post(Item item)
         {
             var userName = this.RequestContext.Principal.Identity.Name;
