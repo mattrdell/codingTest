@@ -16,7 +16,7 @@ namespace CodingTest.WebAPI.Tests.Controllers
             var controller = new ItemsController();
 
             // Act
-            var result = controller.GetItems();
+            var result = controller.Get();
 
             // Assert
             Assert.IsNotNull(result);

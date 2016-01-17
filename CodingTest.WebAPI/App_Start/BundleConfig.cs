@@ -24,12 +24,9 @@ namespace CodingTest.WebAPI
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
 
-            bundles.Add(new ScriptBundle("~/KnockoutModels/LoginViewModel").Include(
-                      "~/Scripts/knockout-{version}.js",
-                      "~/KnockoutModels/LoginViewModel.js"));
-
-            bundles.Add(new ScriptBundle("~/KnockoutModels/ItemListViewmodel").Include(
-          "~/KnockoutModels/ItemListViewModel.js"));
+            bundles.Add(new ScriptBundle("~/bundles/knockout").Include(
+                      "~/Scripts/knockout-3.4.0.js",
+                      "~/KnockoutModels/ItemPurchasingViewModel.js"));
         }
     }
 }

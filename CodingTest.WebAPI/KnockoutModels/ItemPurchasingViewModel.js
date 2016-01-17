@@ -1,4 +1,54 @@
-﻿function LoginViewModel() {
+﻿var itemPurchasingViewModel;
+
+function Item(itemId, name, description, price, qtyInStock) {
+    var self = this;
+    self.ItemId = ko.observable(itemId);
+    self.Name = ko.observable(name);
+    self.Description = ko.observable(description);
+    self.Price = ko.observable(price);
+    self.QtyInStock = ko.observable(qtyInStock);
+
+    self.Purchase = function () {
+        var dataObject = ko.toJSON(this);
+
+        $.ajax({
+            url: '/api/items',
+            type: 'post',
+            data: dataObject,
+            contentType: 'application/json',
+            success: itemPurchasingViewModel.itemListViewModel.getItems()
+    });
+    };
+}
+
+function ItemList() {
+    var self = this;
+    self.items = ko.observableArray([]);
+
+    self.getItems = function () {
+        self.items.removeAll();
+
+        $.getJSON('/api/items', function (data) {
+            $.each(data, function (key, value) {
+                self.items.push(new Item(value.ItemId, value.Name, value.Description, value.Price, value.QtyInStock));
+            });
+        });
+    };
+
+    //self.purchaseItem = function (item) 
+    //{
+    //    $.ajax({
+    //        url: '/api/items/' + item.ItemId(),
+    //        type: 'Purchase',
+    //        contentType: 'application/json',
+    //        success: function () {
+    //            item.QtyInStock -= 1;
+    //        }
+    //    });
+    //};
+}
+
+function LoginViewModel() {
     var self = this;
 
     var tokenKey = 'accessToken';
@@ -80,5 +130,10 @@
     }
 }
 
-var app = new LoginViewModel();
-ko.applyBindings(app);
+itemPurchasingViewModel = { itemViewModel: new Item(), itemListViewModel: new ItemList(), loginViewModel: new LoginViewModel() };
+// on document ready
+$(document).ready(function () {
+
+    ko.applyBindings(itemPurchasingViewModel);
+    itemPurchasingViewModel.itemListViewModel.getItems();
+});

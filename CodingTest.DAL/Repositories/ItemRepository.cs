@@ -29,6 +29,8 @@ namespace CodingTest.DAL.Repositories
                 return false;
             }
 
+            item.QtyInStock -= 1;
+
             db.Entry(item).State = EntityState.Modified;
 
             try
