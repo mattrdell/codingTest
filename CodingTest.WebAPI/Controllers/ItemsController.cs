@@ -29,26 +29,14 @@ namespace CodingTest.WebAPI.Controllers
             return itemRepo.GetItems();
         }
 
-        //[System.Web.Http.Authorize]
-        public bool PurchaseItem(int itemId)
-        {
-            var itemRepo = new ItemRepository(db);
-
-            return itemRepo.PurchaseItem(itemId);
-        }
-
         [Authorize]
         public HttpResponseMessage Post(Item item)
         {
-            var userName = this.RequestContext.Principal.Identity.Name;
             var itemRepo = new ItemRepository(db);
-            if (itemRepo.PurchaseItem(item.ItemId))
-                item.QtyInStock -= 1;
-            var response = Request.CreateResponse(HttpStatusCode.OK, item);
-            //string url = Url.Link("DefaultApi", new { student.Id });
-            //response.Headers.Location = new Uri(url);
-
-            return response;
+            var result = itemRepo.PurchaseItem(item.ItemId);
+            return  result ? 
+                Request.CreateResponse(HttpStatusCode.OK, item) : 
+                Request.CreateResponse(HttpStatusCode.BadRequest);
         }
 
         protected override void Dispose(bool disposing)
