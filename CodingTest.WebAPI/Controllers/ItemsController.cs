@@ -4,6 +4,8 @@ using System.Web.Mvc;
 using CodingTest.DAL.DataContexts;
 using CodingTest.DAL.Entities;
 using CodingTest.DAL.Repositories;
+using Kendo.Mvc.Extensions;
+using Kendo.Mvc.UI;
 
 namespace CodingTest.WebAPI.Controllers
 {
@@ -21,6 +23,17 @@ namespace CodingTest.WebAPI.Controllers
         public ItemsController(ItemDbCtx dbCtx)
         {
             db = dbCtx;
+        }
+        public DataSourceResult GetItemsAsDataSourceResult([ModelBinder(typeof(DataSourceRequestModelBinder))] DataSourceRequest request)
+        {
+            var itemRepo = new ItemRepository(db);
+            return itemRepo.GetItems().ToDataSourceResult(request, item => new
+            {
+                item.ItemId,
+                item.Description,
+                item.Name,
+                item.Price
+            });
         }
 
         public IEnumerable<Item> GetItems()
