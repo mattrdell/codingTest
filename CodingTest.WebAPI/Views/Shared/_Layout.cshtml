@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/app")
+    
     @Scripts.Render("~/bundles/modernizr")
 	<!--This bundle was moved by the Telerik VS Extensions for compatibility reasons-->
 	@Scripts.Render("~/bundles/jquery")
@@ -18,7 +18,9 @@
 	<script src="@Url.Content("~/Scripts/kendo/2016.1.112/jszip.min.js")"></script>
 	<script src="@Url.Content("~/Scripts/kendo/2016.1.112/kendo.all.min.js")"></script>
 	<script src="@Url.Content("~/Scripts/kendo/2016.1.112/kendo.aspnetmvc.min.js")"></script>
-	<script src="@Url.Content("~/Scripts/kendo.modernizr.custom.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo.modernizr.custom.js")"></script>
+
+    
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
