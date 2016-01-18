@@ -34,7 +34,7 @@ namespace CodingTest.WebAPI.Controllers
         {
             var itemRepo = new ItemRepository(db);
             var result = itemRepo.PurchaseItem(item.ItemId);
-            return  result ? 
+            return result ? 
                 Request.CreateResponse(HttpStatusCode.OK, item) : 
                 Request.CreateResponse(HttpStatusCode.BadRequest);
         }

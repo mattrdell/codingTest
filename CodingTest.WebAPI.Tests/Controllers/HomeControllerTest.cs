@@ -19,7 +19,7 @@ namespace CodingTest.WebAPI.Tests.Controllers
 
             // Assert
             Assert.IsNotNull(result);
-            Assert.AreEqual("Home Page", result.ViewBag.Title);
+            Assert.AreEqual("The Gilded Rose Online Store", result.ViewBag.Title);
         }
     }
 }
