@@ -25,8 +25,8 @@ namespace CodingTest.WebAPI.Controllers
         public IEnumerable<Item> Get()
         {
             var itemRepo = new ItemRepository(db);
-
-            return itemRepo.GetItems();
+            var items = itemRepo.GetItems();
+            return items;
         }
 
         [Authorize]
@@ -34,9 +34,12 @@ namespace CodingTest.WebAPI.Controllers
         {
             var itemRepo = new ItemRepository(db);
             var result = itemRepo.PurchaseItem(item.ItemId);
-            return result ? 
+            var response = result ? 
                 Request.CreateResponse(HttpStatusCode.OK, item) : 
                 Request.CreateResponse(HttpStatusCode.BadRequest);
+            var test = response.ToString();
+
+            return response;
         }
 
         protected override void Dispose(bool disposing)
