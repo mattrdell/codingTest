@@ -1,7 +1,7 @@
 # codingTest
 Web API Coding Test
 
-For this solution I used EF6 CodeFirst, WebAPI, and KnockoutJS. I built a simple DAL with repositories and used dependency injection to ensure that they are testable. I did the same for the controllers. I used WebAPI and wired up to it with KnockoutJS view models. The solution's database is hosted on Azure and the connection string should work. Since CodeFirst is being used, the connection string can be changed and running an update-database command from the package manager console should stand up a new database. All the solution requires is Visual Studio 2015 Community Edition (run as Administrator). 
+For this solution I used EF6 CodeFirst, WebAPI, and KnockoutJS. I built a simple DAL with repositories and used dependency injection to ensure that they are testable. I did the same for the controllers. I used WebAPI and wired up to it with KnockoutJS view models. The solution's database is hosted on Azure and the connection string should work. Since CodeFirst is being used, the connection string can be changed and running an update-database command from the package manager console should stand up a new database. All the solution requires is Visual Studio 2015 Community Edition (run as Administrator). The solution can be safely converted for IIS Express if necessary.
 
 Choice of data format: 
 
