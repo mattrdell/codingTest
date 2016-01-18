@@ -42,18 +42,6 @@ function ItemList() {
             });
         });
     };
-
-    //self.purchaseItem = function (item) 
-    //{
-    //    $.ajax({
-    //        url: '/api/items/' + item.ItemId(),
-    //        type: 'Purchase',
-    //        contentType: 'application/json',
-    //        success: function () {
-    //            item.QtyInStock -= 1;
-    //        }
-    //    });
-    //};
 }
 
 function LoginViewModel() {
@@ -107,9 +95,10 @@ function LoginViewModel() {
             url: '/api/Account/Register',
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(data)
-        }).done(function (data) {
+        }).done(function(data) {
+            window.alert("Registered successfully");
             self.result("Done!");
-        }).fail(showError);
+        }).fail();
     }
 
     self.login = function () {
@@ -126,6 +115,7 @@ function LoginViewModel() {
             url: '/Token',
             data: loginData
         }).done(function (data) {
+            window.alert("Logged in");
             self.user(data.userName);
             // Cache the access token in session storage.
             sessionStorage.setItem(tokenKey, data.access_token);
@@ -134,7 +124,8 @@ function LoginViewModel() {
 
     self.logout = function () {
         self.user('');
-        sessionStorage.removeItem(tokenKey)
+        sessionStorage.removeItem(tokenKey);
+        window.alert("Logged out");
     }
 }
 
