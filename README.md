@@ -17,4 +17,4 @@ Response (for GetItems) (JSON):
 
 Authentication mechanism:
 
-Local authentication. You must have a user account on the server. You can register for free. This was simpler than a full AD integration and works with the web. User creation and logging in are done via WebAPI calls using KnockoutJS. The 'Athenticate' attribute on the post controller action ensures you must be authenticated to purchase. 
+Local authentication. You must have a user account on the server. You can register for free. This was simpler than a full AD integration and works with the web. User creation and logging in are done via WebAPI calls using KnockoutJS. The 'Athenticate' attribute on the post controller action ensures you must be authenticated to purchase. (If you try without, you naturally get a 401 back from the server.)
